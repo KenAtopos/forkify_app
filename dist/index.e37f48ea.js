@@ -576,7 +576,7 @@ const controlRecipes = async function() {
         // 2) rendering recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        console.error(err);
+        (0, _recipeViewJsDefault.default).renderError();
     }
 };
 const init = function() {
@@ -2604,7 +2604,6 @@ const loadRecipe = async function(id) {
     try {
         const data = await (0, _helperJs.getJSON)(`${(0, _configJs.API_URL)}/${id}`);
         const { recipe  } = data.data;
-        // console.log(recipe);
         state.recipe = {
             id: recipe.id,
             title: recipe.title,
@@ -2617,7 +2616,7 @@ const loadRecipe = async function(id) {
         };
         console.log(state.recipe);
     } catch (err) {
-        console.error(`${err}💀`);
+        throw err;
     }
 };
 
@@ -2664,6 +2663,8 @@ var _fractional = require("fractional");
 class RecipeView {
     #parentElement = document.querySelector(".recipe");
     #data;
+    #errorMessage = "We could not find the message, please try another one";
+    #message;
     render(data) {
         this.#data = data;
         const markup = this.#generateMarkup();
@@ -2673,7 +2674,7 @@ class RecipeView {
     #clear() {
         this.#parentElement.innerHTML = "";
     }
-    renderSpinner = function() {
+    renderSpinner() {
         const spinner = `
     <div class="spinner">
       <svg>
@@ -2681,9 +2682,37 @@ class RecipeView {
       </svg>
     </div>
   `;
-        this.#parentElement.innerHTML = "";
+        this.#clear();
         this.#parentElement.insertAdjacentHTML("afterbegin", spinner);
-    };
+    }
+    renderError(message = this.#errorMessage) {
+        const errorPrompt = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", errorPrompt);
+    }
+    renderMessage(message = this.#message) {
+        const errorPrompt = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", errorPrompt);
+    }
     addHandlerRender(handler) {
         [
             "hashchange",
