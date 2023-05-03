@@ -4,14 +4,6 @@ import recipeView from "./views/recipeView.js";
 import "core-js/stable"; // add support to the old browser, by transferring ES6 features to the old syntax
 import "regenerator-runtime/runtime"; // add the support for the async/await, polyfilling
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
