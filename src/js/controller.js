@@ -1,12 +1,9 @@
-import * as module from "./model.js";
+import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
+import searchView from "./views/searchView.js";
 
 import "core-js/stable"; // add support to the old browser, by transferring ES6 features to the old syntax
 import "regenerator-runtime/runtime"; // add the support for the async/await, polyfilling
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
 
 const controlRecipes = async function () {
   try {
@@ -16,17 +13,33 @@ const controlRecipes = async function () {
     recipeView.renderSpinner();
 
     // 1) loading recipe
-    await module.loadRecipe(id);
+    await model.loadRecipe(id);
 
     // 2) rendering recipe
-    recipeView.render(module.state.recipe);
+    recipeView.render(model.state.recipe);
   } catch (err) {
+    console.log(err);
     recipeView.renderError();
+  }
+};
+
+const controlSearchResults = async function () {
+  try {
+    // 1) get search query
+    const query = searchView.getQuery();
+
+    if (!query) return;
+    // 2) load query
+    await model.loadSearchResults(query);
+    console.log(model.state.search.results);
+  } catch (err) {
+    console.log(err);
   }
 };
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
 };
 
 init();
