@@ -19,7 +19,7 @@ class RecipeView extends View {
       const btn = event.target.closest(".btn--update-servings");
 
       if (!btn) return;
-      console.log(btn);
+
       const { updateTo } = btn.dataset;
       if (+updateTo > 0) {
         handler(+updateTo); // + here is used to convert the string to the number
