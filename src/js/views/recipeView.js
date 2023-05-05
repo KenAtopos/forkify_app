@@ -27,6 +27,15 @@ class RecipeView extends View {
     });
   }
 
+  addHandlerAddBookmark(handler) {
+    this._parentElement.addEventListener("click", function (event) {
+      const btn = event.target.closest(".btn--bookmark");
+      if (!btn) return;
+
+      handler();
+    });
+  }
+
   _generateMarkup() {
     return `
       <figure class="recipe__fig">
@@ -78,9 +87,11 @@ class RecipeView extends View {
         <div class="recipe__user-generated">
           
         </div>
-        <button class="btn--round">
+        <button class="btn--round btn--bookmark">
           <svg class="">
-            <use href="${icons}#icon-bookmark-fill"></use>
+            <use href="${icons}#icon-bookmark${
+      this._data.bookmarked ? "-fill" : ""
+    }"></use>
           </svg>
         </button>
       </div>
@@ -88,11 +99,7 @@ class RecipeView extends View {
       <div class="recipe__ingredients">
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
-          ${this._data.ingredients
-            .map(this._generateMarkupIngredient)
-            .join(
-              ""
-            )} // this syntax works because #generateMarkupIngredient is a call back function, which map function expect to receive
+          ${this._data.ingredients.map(this._generateMarkupIngredient).join("")}
         </ul>
       </div>
 
