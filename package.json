@@ -1,9 +1,9 @@
 {
   "name": "forkify",
   "version": "1.0.0",
-  "description": "recipe apllication",
+  "description": "recipe application",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel index.html --open",
     "build": "parcel build index.html"
   },
   "author": "Ken",
