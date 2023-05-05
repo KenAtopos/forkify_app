@@ -2,13 +2,14 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import paginationView from "./views/paginationView.js";
 
 import "core-js/stable"; // add support to the old browser, by transferring ES6 features to the old syntax
 import "regenerator-runtime/runtime"; // add the support for the async/await, polyfilling
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipes = async function () {
   try {
@@ -37,15 +38,25 @@ const controlSearchResults = async function () {
     if (!query) return;
     // 2) load query
     await model.loadSearchResults(query);
-    resultsView.render(model.state.search.results);
+    // 3) render results
+    resultsView.render(model.getSearchResultsPage());
+    // 4) render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
 };
 
+const controlPagination = function (goToPage) {
+  // render new results and new pagination
+  resultsView.render(model.getSearchResultsPage(goToPage));
+  paginationView.render(model.state.search);
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandleClick(controlPagination);
 };
 
 init();
