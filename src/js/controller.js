@@ -5,6 +5,7 @@ import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
+import { MODAL_CLOSE_SEC } from "./config.js";
 
 import "core-js/stable"; // add support to the old browser, by transferring ES6 features to the old syntax
 import "regenerator-runtime/runtime"; // add the support for the async/await, polyfilling
@@ -83,10 +84,35 @@ const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // show loading spinner
+    addRecipeView.renderSpinner();
 
-  // upload the new recipe data
+    // upload the new recipe data
+    await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    // render recipe
+    recipeView.render(model.state.recipe);
+
+    // success message
+    addRecipeView.renderMessage();
+
+    // render bookmarkView
+    bookmarksView.render(model.state.bookmarks);
+
+    // change ID in URL
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
+
+    // close the window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
+  } catch (err) {
+    console.error("💥", err);
+    addRecipeView.renderError(err.message);
+  }
 };
 
 const init = function () {
@@ -100,7 +126,3 @@ const init = function () {
 };
 
 init();
-
-const clearBookmarks = function () {
-  localStorage.clear("bookmarks");
-};
