@@ -38,8 +38,13 @@ npm start
 
 ## Here is the demo:
 1. Search recipes
-![searchRecipe](./src/img/search_recipe.gif)
+
+    ![searchRecipe](./src/img/search_recipe.gif)
+
 2. Add bookmarks and choose the number to serve
-![bookmarkAndServing](./src/img/bookmark_and_servring.gif)
+
+    ![bookmarkAndServing](./src/img/bookmark_and_servring.gif)
+
 3. Add recipe
-![addRecipe](./src/img/add_recipe.gif)
+
+    ![addRecipe](./src/img/add_recipe.gif)
