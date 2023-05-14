@@ -4,8 +4,8 @@
   "description": "recipe application",
   "default": "index.html",
   "scripts": {
-    "start": "npx parcel index.html --open",
-    "build": "npx parcel build index.html --dist-dir ./dist"
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "Ken",
   "license": "ISC",
