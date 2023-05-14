@@ -1,6 +1,7 @@
 import View from "./View.js";
 
 import icons from "url:../../img/icons.svg"; // will give an url to the dist folder, corresponding svg
+
 class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _errorMessage = "We could not find the message, please try another one";
@@ -133,9 +134,7 @@ class RecipeView extends View {
           <use href="${icons}#icon-check"></use>
         </svg>
         <div class="recipe__quantity">${
-          ingredient.quantity
-            ? ingredient.quantity.toString()
-            : ""
+          ingredient.quantity ? ingredient.quantity.toString() : ""
         }</div>
         <div class="recipe__description">
           <span class="recipe__unit">${ingredient.unit}</span>
