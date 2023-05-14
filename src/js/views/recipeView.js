@@ -1,8 +1,6 @@
 import View from "./View.js";
 
 import icons from "url:../../img/icons.svg"; // will give an url to the dist folder, corresponding svg
-import { Fraction } from "fractional";
-
 class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _errorMessage = "We could not find the message, please try another one";
@@ -136,7 +134,7 @@ class RecipeView extends View {
         </svg>
         <div class="recipe__quantity">${
           ingredient.quantity
-            ? new Fraction(ingredient.quantity).toString()
+            ? ingredient.quantity.toString()
             : ""
         }</div>
         <div class="recipe__description">
