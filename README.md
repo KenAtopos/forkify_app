@@ -1,4 +1,4 @@
-# Forkify
+# [Forkify](https://ken-forkify.netlify.app)
 Forkify is a modern, easy-to-use web application for finding and managing your favorite recipes. Built using JavaScript and the MVC pattern, this app integrates seamlessly with a public API to fetch and send data, providing users with a convenient way to search and interact with a wide variety of recipes.
 
 ## Features
